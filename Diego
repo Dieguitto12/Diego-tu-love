@@ -1,0 +1,26 @@
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+from reportlab.pdfbase import pdfdoc
+
+def create_pdf_with_buttons(file_path):
+    c = canvas.Canvas(file_path, pagesize=letter)
+    width, height = letter
+
+    c.setFont("Helvetica-Bold", 18)
+    c.drawString(100, height - 100, "¿Me querés?")
+
+    # Añadir botones
+    c.setFont("Helvetica", 14)
+    c.drawString(100, height - 150, "1. Sí")
+    c.drawString(100, height - 180, "2. No")
+
+    # Crear los campos de formulario
+    c.acroForm.textfield(name='yesButton', x=80, y=height - 155, width=50, height=20)
+    c.acroForm.textfield(name='noButton', x=80, y=height - 185, width=50, height=20)
+
+    c.showPage()
+    c.save()
+
+# Especifica el nombre del archivo PDF
+file_path = "pregunta_interactiva_con_botones.pdf"
+create_pdf_with_buttons(file_path)
